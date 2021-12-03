@@ -1,0 +1,36 @@
+# Macros for printing fizz, buzz, fizzbuzz
+# drop string we just put on the stack afterwards
+# quit the macro that called us to implement the if/elseif/else
+[[fizz]p lDx q]sa
+[[buzz]p lDx q]sb
+[[fizzbuzz]p lDx q]sc
+
+# Convenience command, drop top of stack
+# Convert top of stack to a number using Z, duplicate it, compare it to
+# itself and if not equal, execute macro again (which will never occur)
+[Zd!=D]sD
+
+# determine which of the 3 printing macros to run
+# print macro will quit this one if it executes
+# if none of them hit, print the top of the stack
+[
+d 15 % 0 =c
+d 5 % 0 =b 
+d 3 % 0 =a
+p
+] sy
+
+# Main loop:
+# -Print appropriate value for top of stack
+# -Increment top of stack, execute again if less than max
+[
+ly x
+1 + d ln >z
+] sz
+
+
+# Push initial value on stack, save max value in register n
+# Then execute main loop
+1 100 
+1+sn
+lzx
